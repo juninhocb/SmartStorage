@@ -16,6 +16,24 @@ for d in Dado.select():
     print("Nome:  ")
     print(d.nome)
 
+@app.route("/compras", methods = ['POST'])
+def retornaCompras():
+    
+    compras = 0
+    
+    body = request.get_json()
+    
+    nome = novoComparar(body["nome"])
+    
+    for d in Dado.select():
+        print(d.nome)
+        if(d.nome == body["nome"]):
+            compras = 1 + compras
+                 
+    return {"status:": 200 ,"Usuario": nome, "Quantidade de produtos": compras}
+
+
+
 @app.route("/cadastro", methods = ['POST'])
 def cadastraUsuarios():
     
