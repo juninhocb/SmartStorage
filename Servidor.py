@@ -20,18 +20,28 @@ def retornaCompras():
     
     compras = 0
     
+    userSlot = []
+    
+    addCompras = 1
+    
     body = request.get_json()
     
     nome = novoComparar(body["nome"])
     
-    for d in Dado.select():
-        print(d.nome)
-        if(d.nome == body["nome"]):
+    for u in User.select():
+        print(u.usuario)
+        if(u.usuario == body["nome"]):
             compras = 1 + compras
+            userSlot.append(u.id)
+            
     if (compras == 0):
-        compras = 'Não há entradas para este usuário'
+        compras = 'Não há encomendas para este usuário'
+    
+    
+    
+    
                  
-    return {"status:": 200 ,"Usuario": nome, "Quantidade de produtos": compras}
+    return {"status:": 200 ,"Usuario": nome, "Quantidade de produtos": compras, "Slots": userSlot}
 
 
 
