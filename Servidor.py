@@ -10,7 +10,6 @@ import os
 
 app = Flask("Server Smart Storage")
 
-#dado1 = Dado.create(nome = 'Marcela',endereco = 'Rua Tal numero tal', bloco = 'C', ap = '110', img = 'Etiqueta2.jpg' )
 
 for d in Dado.select():
     print("Nome:  ")
@@ -29,6 +28,8 @@ def retornaCompras():
         print(d.nome)
         if(d.nome == body["nome"]):
             compras = 1 + compras
+    if (compras == 0):
+        compras = 'Não há entradas para este usuário'
                  
     return {"status:": 200 ,"Usuario": nome, "Quantidade de produtos": compras}
 
