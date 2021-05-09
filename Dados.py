@@ -16,8 +16,12 @@ class Dado(BaseModel):
     ap = IntegerField()
 
 class User(BaseModel):
+    id = IntegerField()
     usuario = CharField()
     img = CharField()
+    
+
+    
    
    
 
@@ -33,9 +37,11 @@ if __name__ == "__main__":  # se estiver rodando esse programa, executa!  (evita
         DB.create_tables([Dado, User])
     except OperationalError as e:
         print('erro ao criar tabela:' +str(e))
-'''
-dado1 = Dado.create(nome = 'Marcela',endereco = 'Rua Tal numero tal', bloco = 'C', ap = '110', img = 'Etiqueta2.jpg')
 
+#dado1 = Dado.create(nome = 'Marcela',endereco = 'Rua Tal numero tal', bloco = 'C', ap = '110', img = 'Etiqueta2.png')
+        
+#User.create(id = 0,usuario = 'Marcela',img = 'Etiqueta2.png')
+'''
 for d in Dado.select():
     print("Nome:  ")
     print(d.nome)
