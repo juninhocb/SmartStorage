@@ -6,6 +6,9 @@ from Dados import Dado
 from Dados import User
 from playhouse.shortcuts import dict_to_model
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 
 app = Flask("Server Smart Storage")
@@ -33,12 +36,6 @@ def retornaCompras():
         if(u.usuario == body["nome"]):
             compras = 1 + compras
             userSlot.append(u.id)
-            
-    if (compras == 0):
-        compras = 'Não há encomendas para este usuário'
-    
-    
-    
     
                  
     return {"status:": 200 ,"Usuario": nome, "Quantidade de produtos": compras, "Slots": userSlot}
@@ -79,6 +76,38 @@ def enviaDados():
     User.create(usuario = usuario, img = (receber))
     
     return {"status:": 200, "Encomenda de":usuario, "Status da Entrega": ok}
+
+@app.route("/excluir", methods = ['Get'])
+def excluiDados():
+    
+    body = request.get_json()
+    
+    receber  = body["id"]
+    
+    usuario = ""
+    
+    msg = "OK!"
+    
+    key = False
+    
+    for u in User.select():
+        if(u.id == int(receber)):
+            usuario = u.usuario
+    
+    
+    for u in User.select():
+        if(u.id == int(receber)):
+            u.delete_instance()
+    
+    if(not usuario):
+        msg  = "Não alterado"
+        usuario = "Usuário não encontrado"
+            
+    
+    
+    
+    
+    return {"status:": 200, "Encomenda de":usuario, "Situação de exclusão do slot": msg}
 
 
 app.run()
